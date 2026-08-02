@@ -2,7 +2,7 @@
 /**
  * RecoveryCodes test suite.
  *
- * @package   SugarMill\Totp
+ * @package   Sugar\Totp
  * @copyright Copyright (c) 2026, ArrayPress Limited
  * @license   GPL-2.0-or-later
  * @since     1.0.0
@@ -10,11 +10,11 @@
 
 declare( strict_types=1 );
 
-namespace SugarMill\Totp\Tests;
+namespace Sugar\Totp\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use SugarMill\Totp\RecoveryCodes;
+use Sugar\Totp\RecoveryCodes;
 
 final class RecoveryCodesTest extends TestCase {
 

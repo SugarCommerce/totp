@@ -3,7 +3,7 @@ declare( strict_types=1 );
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../../bench-lib.php';
 
-use SugarMill\Totp\{Totp, Base32, RecoveryCodes};
+use Sugar\Totp\{Totp, Base32, RecoveryCodes};
 
 $totp   = new Totp();
 $secret = $totp->generate_secret();

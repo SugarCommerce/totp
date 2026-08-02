@@ -8,7 +8,7 @@
  * functions and a time range from 1970 to 2603. A phone only proves
  * agreement at one instant.
  *
- * @package   SugarMill\Totp
+ * @package   Sugar\Totp
  * @copyright Copyright (c) 2026, ArrayPress Limited
  * @license   GPL-2.0-or-later
  * @since     1.0.0
@@ -16,13 +16,13 @@
 
 declare( strict_types=1 );
 
-namespace SugarMill\Totp\Tests;
+namespace Sugar\Totp\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use SugarMill\Totp\Algorithm;
-use SugarMill\Totp\Base32;
-use SugarMill\Totp\Totp;
+use Sugar\Totp\Algorithm;
+use Sugar\Totp\Base32;
+use Sugar\Totp\Totp;
 
 final class TotpTest extends TestCase {
 

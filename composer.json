@@ -1,10 +1,10 @@
 {
-  "name": "sugarmill/totp",
+  "name": "sugarcommerce/totp",
   "version": "1.0.0",
   "description": "TOTP (RFC 6238) and HOTP (RFC 4226) two-factor authentication codes. Zero dependencies, verified against the official RFC test vectors. Works with Google Authenticator, 1Password, Bitwarden and Authy.",
   "type": "library",
   "license": "GPL-2.0-or-later",
-  "homepage": "https://github.com/sugarmill/totp",
+  "homepage": "https://github.com/sugarcommerce/totp",
   "authors": [
     {
       "name": "David Sherlock",
@@ -31,12 +31,12 @@
   },
   "autoload": {
     "psr-4": {
-      "SugarMill\\Totp\\": "src/"
+      "Sugar\\Totp\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SugarMill\\Totp\\Tests\\": "tests/"
+      "Sugar\\Totp\\Tests\\": "tests/"
     }
   },
   "scripts": {
@@ -51,7 +51,7 @@
   "minimum-stability": "stable",
   "prefer-stable": true,
   "support": {
-    "issues": "https://github.com/sugarmill/totp/issues",
-    "source": "https://github.com/sugarmill/totp"
+    "issues": "https://github.com/sugarcommerce/totp/issues",
+    "source": "https://github.com/sugarcommerce/totp"
   }
 }
