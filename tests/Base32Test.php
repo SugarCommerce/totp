@@ -4,7 +4,7 @@
  *
  * Encoding is checked against the RFC 4648 section 10 reference vectors.
  *
- * @package   Sugar\Totp
+ * @package   SugarCommerce\Totp
  * @copyright Copyright (c) 2026, ArrayPress Limited
  * @license   GPL-2.0-or-later
  * @since     1.0.0
@@ -12,11 +12,11 @@
 
 declare( strict_types=1 );
 
-namespace Sugar\Totp\Tests;
+namespace SugarCommerce\Totp\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Sugar\Totp\Base32;
+use SugarCommerce\Totp\Base32;
 
 final class Base32Test extends TestCase {
 

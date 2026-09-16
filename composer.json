@@ -31,12 +31,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Sugar\\Totp\\": "src/"
+      "SugarCommerce\\Totp\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Sugar\\Totp\\Tests\\": "tests/"
+      "SugarCommerce\\Totp\\Tests\\": "tests/"
     }
   },
   "scripts": {

@@ -2,7 +2,7 @@
 /**
  * RFC 4648 base32 encoding.
  *
- * @package   Sugar\Totp
+ * @package   SugarCommerce\Totp
  * @copyright Copyright (c) 2026, ArrayPress Limited
  * @license   GPL-2.0-or-later
  * @since     1.0.0
@@ -10,7 +10,7 @@
 
 declare( strict_types=1 );
 
-namespace Sugar\Totp;
+namespace SugarCommerce\Totp;
 
 /**
  * Class Base32

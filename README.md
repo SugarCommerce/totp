@@ -30,7 +30,7 @@ composer require sugarcommerce/totp
 ### Enrolment
 
 ```php
-use Sugar\Totp\Totp;
+use SugarCommerce\Totp\Totp;
 
 $totp   = new Totp();
 $secret = $totp->generate_secret();   // store this against the user
@@ -103,7 +103,7 @@ $totp->code( $secret );   // '005924'
 The fallback for a lost or wiped phone. Not part of RFC 6238 — a product concern, but a universal companion to TOTP.
 
 ```php
-use Sugar\Totp\RecoveryCodes;
+use SugarCommerce\Totp\RecoveryCodes;
 
 // At enrolment
 $codes  = RecoveryCodes::generate();          // ['A3K9M-2PQ7X', …] — show once
@@ -132,7 +132,7 @@ RecoveryCodes::verify( 'oabcd lefgh', $hashes );   // matches 0ABCD-1EFGH
 ### Base32 on its own
 
 ```php
-use Sugar\Totp\Base32;
+use SugarCommerce\Totp\Base32;
 
 Base32::encode( random_bytes( 20 ) );
 Base32::decode( 'JBSW Y3DP EHPK 3PXP' );   // spaces and case ignored
