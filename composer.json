@@ -1,6 +1,6 @@
 {
   "name": "sugarcommerce/totp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TOTP (RFC 6238) and HOTP (RFC 4226) two-factor authentication codes. Zero dependencies, verified against the official RFC test vectors. Works with Google Authenticator, 1Password, Bitwarden and Authy.",
   "type": "library",
   "license": "GPL-2.0-or-later",

@@ -30,7 +30,7 @@ final readonly class Base32 {
 	/**
 	 * RFC 4648 base32 alphabet.
 	 */
-	private const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+	private const string ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
 	/**
 	 * Encode raw bytes as base32.
