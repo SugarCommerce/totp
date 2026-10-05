@@ -182,6 +182,33 @@ final class TotpTest extends TestCase {
 		);
 	}
 
+	public function test_verify_after_accepts_a_newer_step_and_returns_it(): void {
+		$secret = $this->secret_for( Algorithm::SHA1 );
+		$totp   = new Totp( timestamp: 1234567890 );
+
+		$this->assertSame( $totp->counter(), $totp->verify_after( $totp->code( $secret ), $secret, 0 ) );
+		$this->assertSame( $totp->counter(), $totp->verify_after( $totp->code( $secret ), $secret, $totp->counter() - 1 ) );
+	}
+
+	public function test_verify_after_refuses_a_replayed_step(): void {
+		$secret = $this->secret_for( Algorithm::SHA1 );
+		$totp   = new Totp( timestamp: 1234567890 );
+		$code   = $totp->code( $secret );
+
+		$this->assertNull( $totp->verify_after( $code, $secret, $totp->counter() ), 'The same step twice.' );
+		$this->assertNull( $totp->verify_after( $code, $secret, $totp->counter() + 1 ), 'An older step.' );
+	}
+
+	public function test_verify_after_refuses_a_wrong_code(): void {
+		$this->assertNull( ( new Totp( timestamp: 1234567890 ) )->verify_after( '000000', $this->secret_for( Algorithm::SHA1 ), 0 ) );
+	}
+
+	public function test_verify_after_must_be_used(): void {
+		$attributes = ( new \ReflectionMethod( Totp::class, 'verify_after' ) )->getAttributes( \NoDiscard::class );
+
+		$this->assertCount( 1, $attributes, 'verify_after() lost #[\NoDiscard].' );
+	}
+
 	public function test_verify_counter_returns_null_on_failure(): void {
 		$this->assertNull( ( new Totp( timestamp: 1234567890 ) )->verify_counter( '000000', $this->secret_for( Algorithm::SHA1 ) ) );
 	}

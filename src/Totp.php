@@ -237,6 +237,39 @@ final readonly class Totp {
 		return $match;
 	}
 
+	/**
+	 * Verify a code only if it is newer than the last one accepted.
+	 *
+	 * The replay guard {@see verify_counter()} leaves to the caller, in one
+	 * call: a code is refused when its time step is at or below the one
+	 * recorded at the last sign-in, so a code read over a shoulder — or
+	 * captured by a phishing proxy and replayed seconds later — is spent
+	 * the moment its owner uses it.
+	 *
+	 * Store the returned step as the new `$last_step`. Do that with a
+	 * conditional write (`UPDATE … SET step = :new WHERE step < :new`, and
+	 * check a row changed): two requests carrying the same code can both
+	 * pass this check before either has saved, and only the store can say
+	 * which one got there first.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $code      Code submitted by the user.
+	 * @param string $secret    Base32 secret.
+	 * @param int    $last_step Time step of the last code accepted; 0 when
+	 *                          none has been.
+	 * @param int    $window    Time steps to accept either side of now.
+	 *
+	 * @return int|null The step to record, or null for a wrong code or a
+	 *                  replay.
+	 */
+	#[\NoDiscard( 'The step must be recorded, or the same code works again.' )]
+	public function verify_after( #[\SensitiveParameter] string $code, #[\SensitiveParameter] string $secret, int $last_step, int $window = 1 ): ?int {
+		$step = $this->verify_counter( $code, $secret, $window );
+
+		return null !== $step && $step > $last_step ? $step : null;
+	}
+
 	/* ─── Enrolment ─────────────────────────────────────────────────── */
 
 	/**

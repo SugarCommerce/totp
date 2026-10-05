@@ -63,6 +63,14 @@ if ( null === $counter || $counter <= $user->last_totp_counter ) {
 $user->last_totp_counter = $counter;
 ```
 
+Or in one call — `verify_after()` returns the step to record, or null for a wrong code or a replay:
+
+```php
+$step = $totp->verify_after( $submitted_code, $secret, $user->last_totp_counter );
+```
+
+Record the step with a conditional write (`UPDATE … SET step = :new WHERE step < :new`, then check a row changed). Two requests carrying the same code can both pass the check before either has saved; only the store can say which got there first.
+
 ### Countdown
 
 ```php
@@ -146,7 +154,7 @@ composer install
 composer test
 ```
 
-107 tests. The core of the suite is the RFC 6238 Appendix B table — 18 vectors pinning the algorithm across three hash functions and timestamps from 1970 to 2603. That's why no authenticator app is needed to trust this: a phone proves agreement at one instant, the vectors prove correctness everywhere.
+141 tests. The core of the suite is the RFC 6238 Appendix B table — 18 vectors pinning the algorithm across three hash functions and timestamps from 1970 to 2603. That's why no authenticator app is needed to trust this: a phone proves agreement at one instant, the vectors prove correctness everywhere.
 
 ## License
 
