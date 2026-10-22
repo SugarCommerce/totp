@@ -49,17 +49,26 @@ final readonly class Base32 {
 			return '';
 		}
 
-		$bits = '';
+		$out    = '';
+		$buffer = 0;
+		$bits   = 0;
 
+		// Shift each byte into a small bit buffer and peel off 5-bit
+		// groups from the top. The buffer never holds more than 12 bits.
 		for ( $i = 0, $len = strlen( $bytes ); $i < $len; $i++ ) {
-			$bits .= str_pad( decbin( ord( $bytes[ $i ] ) ), 8, '0', STR_PAD_LEFT );
+			$buffer = ( $buffer << 8 ) | ord( $bytes[ $i ] );
+			$bits  += 8;
+
+			while ( $bits >= 5 ) {
+				$bits  -= 5;
+				$out   .= self::ALPHABET[ ( $buffer >> $bits ) & 0x1F ];
+				$buffer = $buffer & ( ( 1 << $bits ) - 1 );
+			}
 		}
 
-		$out = '';
-
-		foreach ( str_split( $bits, 5 ) as $chunk ) {
-			// The final chunk is right-padded with zero bits, per RFC 4648.
-			$out .= self::ALPHABET[ bindec( str_pad( $chunk, 5, '0', STR_PAD_RIGHT ) ) ];
+		// The final group is right-padded with zero bits, per RFC 4648.
+		if ( $bits > 0 ) {
+			$out .= self::ALPHABET[ ( $buffer << ( 5 - $bits ) ) & 0x1F ];
 		}
 
 		if ( $pad && 0 !== strlen( $out ) % 8 ) {
@@ -94,21 +103,22 @@ final readonly class Base32 {
 			return false;
 		}
 
-		$bits = '';
+		$out    = '';
+		$buffer = 0;
+		$bits   = 0;
 
 		for ( $i = 0, $len = strlen( $clean ); $i < $len; $i++ ) {
-			$bits .= str_pad( decbin( (int) strpos( self::ALPHABET, $clean[ $i ] ) ), 5, '0', STR_PAD_LEFT );
-		}
+			$buffer = ( $buffer << 5 ) | (int) strpos( self::ALPHABET, $clean[ $i ] );
+			$bits  += 5;
 
-		$out = '';
-
-		// Trailing bits that don't complete a byte are padding, not data.
-		foreach ( str_split( $bits, 8 ) as $byte ) {
-			if ( 8 === strlen( $byte ) ) {
-				$out .= chr( bindec( $byte ) );
+			if ( $bits >= 8 ) {
+				$bits  -= 8;
+				$out   .= chr( ( $buffer >> $bits ) & 0xFF );
+				$buffer = $buffer & ( ( 1 << $bits ) - 1 );
 			}
 		}
 
+		// Trailing bits that don't complete a byte are padding, not data.
 		return $out;
 	}
 

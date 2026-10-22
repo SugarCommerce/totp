@@ -82,7 +82,7 @@ final readonly class RecoveryCodes {
 	 * @param int $groups Hyphen-separated groups per code.
 	 * @param int $length Characters per group.
 	 *
-	 * @return string[] Plaintext codes.
+	 * @return list<string> Plaintext codes.
 	 *
 	 * @throws \InvalidArgumentException When asked for a degenerate set.
 	 * @throws \Random\RandomException   When the CSPRNG is unavailable.
@@ -160,9 +160,10 @@ final readonly class RecoveryCodes {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string[] $codes Plaintext codes.
+	 * @param array<int, string> $codes Plaintext codes.
 	 *
-	 * @return string[] Hashes, in the same order.
+	 * @return array<int, string> Hashes, in the same order and under the
+	 *                            same keys.
 	 */
 	public static function hash_all( #[\SensitiveParameter] array $codes ): array {
 		return array_map( static fn( string $code ): string => self::hash( $code ), $codes );
@@ -180,8 +181,11 @@ final readonly class RecoveryCodes {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string   $submitted Code as typed by the user.
-	 * @param string[] $hashes    Stored hashes of unconsumed codes.
+	 * @param string                  $submitted Code as typed by the user.
+	 * @param array<int, string|null> $hashes    Stored hashes of unconsumed
+	 *                                           codes. Null or empty
+	 *                                           entries (a cleared slot)
+	 *                                           are skipped.
 	 *
 	 * @return int|null Index into `$hashes`, or null when nothing matched.
 	 */

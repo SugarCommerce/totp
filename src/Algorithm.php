@@ -28,8 +28,19 @@ namespace SugarCommerce\Totp;
  */
 enum Algorithm: string {
 
-	case SHA1   = 'sha1';
+	/**
+	 * HMAC-SHA1. The default, and the only one every app honours.
+	 */
+	case SHA1 = 'sha1';
+
+	/**
+	 * HMAC-SHA256. Only where you control the authenticator too.
+	 */
 	case SHA256 = 'sha256';
+
+	/**
+	 * HMAC-SHA512. Only where you control the authenticator too.
+	 */
 	case SHA512 = 'sha512';
 
 	/**
